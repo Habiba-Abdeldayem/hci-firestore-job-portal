@@ -32,6 +32,9 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth'; // Import Ang
 import { FirebaseAppModule, provideFirebaseApp } from '@angular/fire/app'; // Import FirebaseAppModule
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { SearchComponent } from './search/search.component';
+import { SearchApplicantsComponent } from './search-applicants/search-applicants.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,9 @@ import { getFirestore } from 'firebase/firestore';
     HomeComponent,
     SavedJobComponent,
     PauseDialogComponent,
+    CompanyProfileComponent,
+    SearchComponent,
+    SearchApplicantsComponent,
   ],
   imports: [
     BrowserModule,

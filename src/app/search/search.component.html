@@ -1,0 +1,29 @@
+<div class="search-hero">
+    <input type="text" name="search" [(ngModel)]="searchText" (input)="filterHeroes()" placeholder="search">
+  </div>
+  <table class="table table_striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+         <th>phone number</th>
+        <th>address</th>
+        <th>Department</th>
+        <th>interested in</th>
+        <th>CV</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let applicant of filteredHeroes">
+        
+        <td>{{ applicant.name }}</td>
+        <td>{{ applicant.email }}</td>
+        <td>{{ applicant.phoneNumber }}</td>
+        <td>{{ applicant.address }}</td>
+        <td>{{ applicant.department }}</td>
+        <td>{{ applicant.interested_in }}</td>
+        <td>{{ applicant.cv }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
