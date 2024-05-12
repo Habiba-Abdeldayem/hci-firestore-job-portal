@@ -1,0 +1,33 @@
+
+
+<div class="job-details-container">
+  <div *ngIf="jobb">
+    <h2>{{ jobb.jobTitle }}</h2>
+    <div class="job-info">
+      <p class="job-company-location">
+        <a href="/company-profile" class="company-name">{{ jobb.companyName }}</a>
+        <mat-icon>location_on</mat-icon> {{ jobb.location }}
+      </p>
+      <p class="job-details">{{ "fullTimePartTime" }} | {{ "remoteOnsite" }} | {{ "yearsOfExperience" }} years experience</p>
+    </div>
+    <div class="job-description">
+      <h3>Job Description</h3>
+      <p>{{ jobb.description }}</p>
+    </div>
+    <div class="job-qualifications">
+      <h3>Qualifications</h3>
+      <p>{{ "jobQualifications" }}</p>
+    </div>
+    <div class="job-responsibilities">
+      <h3>Responsibilities</h3>
+      <p>{{ "jobResponsibilities" }}</p>
+    </div>
+    <div class="apply-save-buttons">
+        <button type="button" class="save-button"><mat-icon>bookmark</mat-icon></button>
+      <button type="button" class="apply-button">Apply Now</button>
+
+
+    </div>
+</div>
+
+  </div>

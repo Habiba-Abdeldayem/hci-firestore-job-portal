@@ -1,0 +1,49 @@
+<form [formGroup]="postJobForm" (ngSubmit)="onSubmit()" action="#" method="post">
+
+  <div class="new-job-container">
+      <h2>LET'S POST A NEW JOB !!</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="companyName">Company Name:</label>
+          <input formControlName = "companyName" type="text" id="companyName" name="companyName">
+          <div class="error-message" *ngIf="postJobForm.get('companyName')?.invalid && (postJobForm.get('companyName')?.dirty || postJobForm.get('companyName')?.touched)">
+            <div *ngIf="postJobForm.get('companyName')?.errors?.['required']">Company Name is required.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="jobTitle">Job Title:</label>
+          <input  formControlName = "jobTitle" type="text" id="jobTitle" name="jobTitle">
+          <div class="error-message" *ngIf="postJobForm.get('jobTitle')?.invalid && (postJobForm.get('jobTitle')?.dirty || postJobForm.get('jobTitle')?.touched)">
+            <div *ngIf="postJobForm.get('jobTitle')?.errors?.['required']">job Title is required.</div>
+            <div *ngIf="postJobForm.get('jobTitle')?.errors?.['maxlength']">Job Title cannot exceed 50 characters.</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="location">Location:</label>
+          <input formControlName = "location" type="text" id="location" name="location">
+          <div class="error-message" *ngIf="postJobForm.get('location')?.invalid && (postJobForm.get('location')?.dirty || postJobForm.get('location')?.touched)">
+            <div *ngIf="postJobForm.get('location')?.errors?.['required']">Location is required.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="salaryRange">salaryRange:</label>
+          <input formControlName = "salaryRange" type="text" id="salaryRange" name="salaryRange">
+          <div class="error-message" *ngIf="postJobForm.get('salaryRange')?.invalid && (postJobForm.get('salaryRange')?.dirty || postJobForm.get('applyingMethod')?.touched)">
+            <div *ngIf="postJobForm.get('salaryRange')?.errors?.['required']">Applying Method is required.</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea formControlName = "description" id="description" name="description" rows="4"></textarea>
+          <div class="error-message" *ngIf="postJobForm.get('description')?.invalid && (postJobForm.get('description')?.dirty || postJobForm.get('description')?.touched)">
+            <div *ngIf="postJobForm.get('description')?.errors?.['required']">Description is required.</div>
+          </div>     
+        </div>
+      </div>
+      <button type="submit" (click)="onSubmit()">Submit</button>
+    </div>
+    </form>

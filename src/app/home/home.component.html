@@ -1,0 +1,118 @@
+<div class="page">
+    <nav class="nav">
+        <h1>Job Portal</h1>
+        <a routerLink="/">Home</a>
+        <a routerLink="/saved-jobs">Saved jobs</a>
+        <a routerLink="/login">log out</a>
+    </nav>
+    <div >
+        <img src="../../assets/images/apply.jpg" alt="no image" class="apply">
+    </div>
+    <div class="search">
+        <input placeholder="search"  [(ngModel)]="searchTerm" (input)="filterJobs()">
+        <img src="../../assets/images/image.png" alt="no filter icon">
+    </div>
+    <div class="test">
+        <table >
+            <tbody>
+                <ng-container *ngIf="searching || filtering; else allJobs">
+                    <tr *ngFor="let job of filteredJobs">
+                        <td>
+                            <div>
+                                <img (click)="toggleSaved(job)" *ngIf="job.isSaved" src="../../assets/images/save.png" alt="Saved">
+                                <img (click)="toggleSaved(job)" *ngIf="!job.isSaved" src="../../assets/images/save2.png" alt="Not Saved">
+                                <strong>{{ job.companyName }}</strong><br>
+                                Jobtitle: {{ job.jobTitle }}<br>
+                                Salary: {{ job.salaryRange }}<br>
+                                Location: {{ job.location }}<br>
+                                Description: {{ job.description }}<br>
+                                <button (click)="viewDetails(job.id)" [disabled]="!isJobActive(job.pausedate)">View Details</button><br>
+                                <span *ngIf="!isJobActive(job.pausedate)">This job is paused.</span><br>
+                                <button *ngIf="job.companyName === username && isCompany" (click)="editJob(job)">Edit</button><br>
+                                <button *ngIf="job.companyName === username && isCompany" (click)="deleteJob1(job)">Delete</button><br>
+                                <button *ngIf="job.companyName === username && isCompany" (click)="openPauseDialog(job)">pause</button>
+                                <button *ngIf="job.companyName === username && isCompany" (click)="resumeJob(job)">play</button><br>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-template #allJobs>
+                <tr *ngFor="let rowIndex of getRowIndexArray()">
+                    <ng-container *ngFor="let columnIndex of [0, 1]; let lastCol = last">
+                      <td *ngIf="jobs[rowIndex * 2 + columnIndex]">
+                        <div>
+                          <img (click)="toggleSaved(jobs[rowIndex * 2 + columnIndex])" *ngIf="jobs[rowIndex * 2 + columnIndex].isSaved" src="../../assets/images/save.png" alt="Saved">
+                          <img (click)="toggleSaved(jobs[rowIndex * 2 + columnIndex])" *ngIf="!jobs[rowIndex * 2 + columnIndex].isSaved" src="../../assets/images/save2.png" alt="Not Saved">
+                          <strong>{{ jobs[rowIndex * 2 + columnIndex].companyName }}</strong><br>
+                          Jobtitle: {{ jobs[rowIndex * 2 + columnIndex].jobTitle }}<br>
+                          Salary: {{ jobs[rowIndex * 2 + columnIndex].salaryRange }}<br>
+                          Location: {{ jobs[rowIndex * 2 + columnIndex].location }}<br>
+                          Description: {{ jobs[rowIndex * 2 + columnIndex].description }}<br>
+                          <button (click)="viewDetails(jobs[rowIndex * 2 + columnIndex].id)" [disabled]="!isJobActive(jobs[rowIndex * 2 + columnIndex].pausedate)">View Details</button><br>
+                          <button (click)="printt(rowIndex,columnIndex)">click</button>
+                          <span *ngIf="!isJobActive(jobs[rowIndex * 2 + columnIndex].pausedate)">This job is paused. </span><br>
+                          <button *ngIf="jobs[rowIndex * 2 + columnIndex].companyName === username && isCompany" (click)="editJob(jobs[rowIndex * 2 + columnIndex])">Edit</button><br>
+                          <button  (click)="deleteJob(rowIndex, columnIndex)">Delete</button><br>
+                          <button *ngIf="jobs[rowIndex * 2 + columnIndex].companyName === username && isCompany" (click)="openPauseDialog(jobs[rowIndex * 2 + columnIndex])">pause</button>
+                          <button *ngIf="jobs[rowIndex * 2 + columnIndex].companyName === username && isCompany" (click)="resumeJob(jobs[rowIndex * 2 + columnIndex])">play</button><br>
+                        </div>
+                      </td>
+                      <td *ngIf="lastCol && !jobs[rowIndex * 2 + columnIndex]">Empty Cell</td>
+                    </ng-container>
+                  </tr>
+                </ng-template>
+            </tbody>
+        </table>
+        <div>
+            <form class="filter1">
+                <h3>Filter by keyword</h3>
+                <input type="checkbox" [(ngModel)]="keywordFilters.front" name="front" (change)="toggleFilters(1)"/>
+                <label for="front">front</label><br>
+                <input type="checkbox" [(ngModel)]="keywordFilters.back" name="back" (change)="toggleFilters(2)"/>
+                <label for="back">back</label><br>
+                <input type="checkbox" [(ngModel)]="keywordFilters.ui" name="ui" (change)="toggleFilters(3)"/>
+                <label for="ui">ui</label><br>
+                <input type="checkbox" [(ngModel)]="keywordFilters.test" name="test" (change)="toggleFilters(4)"/>
+                <label for="test">test</label><br>
+            </form>
+            <form class="filter1">
+                <h3>Filter by salary range</h3>
+                <input type="checkbox" value="5000~7000" name="5000~7000" (change)="toggleFilters(5)"/>
+                <label for="5000~7000">5000~7000</label><br>
+                <input type="checkbox" value="7000~8000" name="7000~8000" (change)="toggleFilters(6)"/>
+                <label for="7000~8000">7000~8000</label><br>
+                <input type="checkbox" value="8000~9000" name="8000~9000" (change)="toggleFilters(7)"/>
+                <label for="8000~9000">8000~9000</label><br>
+                <input type="checkbox" value="9000~10000" name="9000~10000" (change)="toggleFilters(8)"/>
+                <label for="9000~10000">9000~10000</label><br>
+            </form>
+        </div>
+        <div>
+            <form class="filter2">
+                <h3>Filter by Location</h3>
+                <input type="checkbox" value="el saida zinab" name="el saida zinab" (change)="toggleFilters(9)"/>
+                <label for="el saida zinab">el saida zinab</label><br>
+                <input type="checkbox" value="nasr city " name="nasr city" (change)="toggleFilters(10)"/>
+                <label for="nasr city">nasr city</label><br>
+                <input type="checkbox" value="6 october " name="6 october" (change)="toggleFilters(11)"/>
+                <label for="6 october">6 october</label><br>
+                <input type="checkbox" value="elabassia" name="elabassia" (change)="toggleFilters(12)"/>
+                <label for="elabassia">elabassia</label><br>
+            </form>
+            <form class="filter2">
+                <h3>Filter by  job type</h3>
+                <input type="checkbox" value="front developer job" name="front developer job" (change)="toggleFilters(13)"/>
+                <label for="front developer job">front developer job</label><br>
+                <input type="checkbox" value="designer job" name="designer job" (change)="toggleFilters(14)"/>
+                <label for="designer job">designer job</label><br>
+                <input type="checkbox" value="tester job" name="tester job" (change)="toggleFilters(15)"/>
+                <label for="tester job">tester job</label><br>
+                <input type="checkbox" value="back developer job" name="back developer job" (change)="toggleFilters(16)"/>
+                <label for="back developer job">back developer job</label><br>
+            </form>
+        </div>
+    </div>
+    <div>
+        <button *ngIf="isCompany" class="job" (click)="postJob()">POST JOB</button>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+<div class="apply-job-container">
+    <h2>Apply for Job</h2>
+    <form [formGroup]="applyForJobForm">
+    <div class="form-group">
+      <label for="fullName">Full Name:</label>
+      <input formControlName= "fullName" type="text" id="fullName" name="fullName">
+      <div class="error-message" *ngIf="applyForJobForm.get('fullName')?.invalid && (applyForJobForm.get('fullName')?.dirty || applyForJobForm.get('fullName')?.touched)">
+        <div *ngIf="applyForJobForm.get('fullName')?.errors?.['required']">Full Name is required.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number:</label>
+      <input formControlName= "phoneNumber" type="text" id="phoneNumber" name="phoneNumber">
+      <div class="error-message" *ngIf="applyForJobForm.get('phoneNumber')?.invalid && (applyForJobForm.get('phoneNumber')?.dirty || applyForJobForm.get('phoneNumber')?.touched)">
+        <div *ngIf="applyForJobForm.get('phoneNumber')?.errors?.['required']">Phone Number is required.</div>
+        <div *ngIf="applyForJobForm.get('phoneNumber')?.errors?.['pattern']">Please provide a propper phone number</div>
+
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="address">Address:</label>
+      <input formControlName= "address" type="text" id="address" name="address">
+      <div class="error-message" *ngIf="applyForJobForm.get('address')?.invalid && (applyForJobForm.get('address')?.dirty || applyForJobForm.get('address')?.touched)">
+        <div *ngIf="applyForJobForm.get('address')?.errors?.['required']">Address is required.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input formControlName= "email" type="email" id="email" name="email">
+      <div class="error-message" *ngIf="applyForJobForm.get('email')?.invalid && (applyForJobForm.get('email')?.dirty || applyForJobForm.get('email')?.touched)">
+        <div *ngIf="applyForJobForm.get('email')?.errors?.['required']">Email is required.</div>
+        <div *ngIf="applyForJobForm.get('email')?.errors?.['email']">Invalid email format.</div>
+        
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="department">Department:</label>
+      <select  formControlName= "department" id="department" name="department">
+        <option value="sales">Sales</option>
+        <option value="marketing">Marketing</option>
+        <option value="finance">Finance</option>
+        <option value="hr">HR</option>
+      </select>
+      <div class="error-message" *ngIf="applyForJobForm.get('department')?.invalid && (applyForJobForm.get('department')?.dirty || applyForJobForm.get('department')?.touched)">
+        <div *ngIf="applyForJobForm.get('department')?.errors?.['required']">Department is required.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Interested in:</label>
+     <select formControlName="jobType" id="jobType">
+    <option value="">Select Job Type</option>
+    <option value="frontend">Frontend Development</option>
+    <option value="backend">Backend Development</option>
+    <option value="design">Design</option>
+    <option value="marketing">Marketing</option>
+    <option value="finance">Finance</option>
+    <option value="hr">HR</option>
+  </select>
+  <div class="error-message" *ngIf="applyForJobForm.get('jobType')?.invalid && (applyForJobForm.get('jobType')?.dirty || applyForJobForm.get('jobType')?.touched)">
+    <div *ngIf="applyForJobForm.get('jobType')?.errors?.['required']">Job Type is required.</div>
+  </div>
+    </div>
+    <div class="form-group">
+      <label for="resume">Submit your Resume:</label>
+      <input formControlName= "resume" type="file" id="resume" name="resume">
+      <div class="error-message" *ngIf="applyForJobForm.get('resume')?.invalid && (applyForJobForm.get('resume')?.dirty || applyForJobForm.get('resume')?.touched)">
+        <div *ngIf="applyForJobForm.get('resume')?.errors?.['required']">Resume is required.</div>
+        <!-- <div *ngIf="applyForJobForm.get('resume')?.errors?.['invalidFormat']">Invalid file format. Only PDF and DOCX files are allowed.</div> -->
+
+
+
+      </div>
+    </div>
+    <button type="submit" [disabled]="applyForJobForm.invalid">Apply</button>
+  </form>
+  </div>
+  

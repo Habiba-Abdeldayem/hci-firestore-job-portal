@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Pause Job</h1>
+<div mat-dialog-content>
+  <p>Enter pause date:</p>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="data.pausedate" placeholder="Choose a date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.pausedate" cdkFocusInitial>Pause</button>
+</div>

@@ -1,0 +1,85 @@
+.job-details-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 600px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .job-info {
+    margin-bottom: 30px;
+  }
+  
+  .job-company-location {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+  
+  .location-icon {
+    margin-right: 5px;
+  }
+  
+  .job-details {
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  .job-description h3,
+  .job-qualifications h3,
+  .job-responsibilities h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .job-description p,
+  .job-qualifications p,
+  .job-responsibilities p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .apply-save-buttons {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .apply-button,
+  .save-button {
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 10px;
+  }
+  
+  .apply-button {
+    background-color: #FACD91;
+    color: #000000;
+  }
+  
+  .apply-button:hover {
+    background-color: #ff9100;
+  }
+  
+  .save-button {
+    background-color: #c3d3c7;
+    color: #ff9100;
+  }
+  
+  .save-button:hover {
+    background-color: #6a6a6a;
+  }
+  
+  .company-name {
+    margin-right: 20px; 
+  }

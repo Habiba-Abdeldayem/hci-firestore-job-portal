@@ -1,0 +1,39 @@
+<router-outlet></router-outlet>
+<div class="container">
+    <div class="login-container">
+      <div class="circle">
+
+        <img src="../../assets/images/login_user.jpg" alt="Profile Photo">
+      </div>
+      <h2>Login</h2>
+      <form [formGroup]="loginForm" action="#" method="post">
+        <input formControlName = "email" type="text" name="email" placeholder="Email" required>
+        <div class="error-message" *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+          <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</div>
+        </div>
+     
+
+
+        <input  formControlName="password" type="password" name="password" placeholder="Password" required>
+        <div class="error-message" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+          <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
+          <div *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters long.</div>
+        </div>
+
+        <div class="forgot-password">
+          <nav>
+            <a href="#">Forgot Password?</a>
+          </nav>
+          </div>
+        <button type="submit" [disabled] = "loginForm.invalid" (click) = "navigateToHomePage()">Login</button>
+        
+      </form>
+      <div>
+        <nav>
+          Don't have an account? <a routerLink="/signup"> Sign Up</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+  

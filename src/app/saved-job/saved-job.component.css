@@ -1,0 +1,30 @@
+/* saved-job.component.css */
+.job-container {
+    border: 1px solid #ccc; /* Add border around each job */
+  }
+  
+  .job-row {
+    display: flex; /* Use flexbox to arrange jobs in a row */
+  }
+  
+  .job-cell {
+    border-right: 1px solid #ccc; /* Add border between job cells */
+    padding: 10px; /* Add padding to job cell */
+    flex: 1; /* Allow job cell to grow and shrink to fill space */
+    position: relative; /* Set position relative for save icon positioning */
+  }
+  
+  .save-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  
+  .job-details {
+    margin-right: 30px; /* Add margin to the right of job details to create space for save icon */
+  }
+  
+  .buttons button {
+    margin-top: 5px; /* Add top margin to buttons */
+  }
+  

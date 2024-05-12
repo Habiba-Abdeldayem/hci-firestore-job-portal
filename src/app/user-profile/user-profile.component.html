@@ -1,0 +1,53 @@
+<div class="user-profile-container">
+    <h2>Hello <span>{{ userName }}</span>!</h2>
+    
+    <div class="personal-info">
+      <h3>Personal Info</h3>
+      <div class="personal-info-details">
+        <div class="info-item">
+          <span class="info-label">Name:</span>
+          <span class="info-value">{{ userName }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Age:</span>
+          <span class="info-value">{{ userAge }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">City:</span>
+          <span class="info-value">{{ userCity }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Location:</span>
+          <span class="info-value">{{ userLocation }}</span>
+        </div>
+      </div>
+      <div class="user-photo-container">
+        <img class="user-photo" src="{{ userPhotoUrl }}" alt="User Photo">
+      </div>
+    </div>
+    
+    <div class="contact-info">
+      <h3>Contact Info</h3>
+      <div class="info-item">
+        <span class="info-label">Email:</span>
+        <span class="info-value">{{ userEmail }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Phone Number:</span>
+        <span class="info-value">{{ userPhoneNumber }}</span>
+      </div>
+    </div>
+    
+    <div class="educational-info">
+      <h3>Educational Info</h3>
+      <div class="info-item">
+        <span class="info-label">Department:</span>
+        <span class="info-value">{{ userDepartment }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Interested In:</span>
+        <span class="info-value">{{ userInterests }}</span>
+      </div>
+    </div>
+  </div>
+  

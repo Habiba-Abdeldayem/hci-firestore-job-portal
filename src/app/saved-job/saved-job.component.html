@@ -1,0 +1,18 @@
+<div class="saved-jobs">
+  <h2>Saved Jobs</h2>
+  <div class="job-container" *ngFor="let job of savedJobs" (click)="unsaveJob(job)">
+    <div class="job-details">
+      <img *ngIf="job.isSaved" src="../../assets/images/save.png" alt="Saved">
+      <img *ngIf="!job.isSaved" src="../../assets/images/save2.png" alt="Not Saved">
+      <strong>{{ job.companyName }}</strong><br>
+      Job Title: {{ job.jobTitle }}<br>
+      Salary: {{ job.salaryRange }}<br>
+      Location: {{ job.location }}<br>
+      Description: {{ job.description }}<br>
+    </div>
+    <div class="buttons">
+      <button (click)="viewDetails(job)">View Details</button>
+      
+    </div>
+  </div>
+</div>

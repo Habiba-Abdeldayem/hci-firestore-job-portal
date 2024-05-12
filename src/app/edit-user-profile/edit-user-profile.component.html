@@ -1,0 +1,53 @@
+<div class="user-profile-container">
+    <!-- <h2 formControlName= "name">Hello <span>{{ userName }}</span>!</h2> -->
+ <form [formGroup]="editUserProfileForm">
+    <div class="personal-info">
+      <h3>Personal Info</h3>
+      <div class="personal-info-details">
+        <div class="info-item">
+          <span class="info-label">Name:</span>
+          <input formControlName= "userName" type="text" class="info-value">
+        </div>
+        <div class="info-item">
+          <span class="info-label">Age:</span>
+          <input type="text" formControlName= "age" class="info-value">
+        </div>
+        <div class="info-item">
+          <span class="info-label">Location:</span>
+          <input type="text" formControlName= "location" class="info-value">
+        </div>
+      </div>
+      <div class="user-photo-container">
+        <img class="user-photo" src="{{ userPhotoUrl }}" alt="User Photo">
+      </div>
+    </div>
+    
+    <div class="contact-info">
+      <h3>Contact Info</h3>
+      <div class="info-item">
+        <span class="info-label">Email:</span>
+        <input type="email" formControlName= "email" class="info-value">
+      </div>
+      <div class="info-item">
+        <span class="info-label">Phone Number:</span>
+        <input type="tel" formControlName= "phoneNumber" class="info-value">
+      </div>
+    </div>
+    
+    <div class="educational-info">
+      <h3>Educational Info</h3>
+      <div class="info-item">
+        <span class="info-label">Department:</span>
+        <input type="text" [(ngModel)]="userDepartment" class="info-value">
+      </div>
+      <div class="info-item">
+        <span class="info-label">Interested In:</span>
+        <input type="text" [(ngModel)]="userInterests" class="info-value">
+      </div>
+    </div>
+    <button (click)="saveProfile()">Save Changes</button>
+</form>   
+
+<!-- {{editUserProfileForm.value | json}} -->
+
+</div>
