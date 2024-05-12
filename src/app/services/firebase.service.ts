@@ -38,9 +38,10 @@ import { User } from "../interfaces/User";
         );
       }
 
-      updateUserInfo(user: any) : void{
+      updateUserInfo(user: any) {
+        console.log("update firesroe " + user.id);
         const usersCollection = collection(this.firestore,'users');
-        const userDocument = doc(usersCollection,'104');
+        const userDocument = doc(usersCollection,user.id);
         updateDoc(userDocument,user);
         
     }
@@ -107,6 +108,8 @@ import { User } from "../interfaces/User";
     
     private mapApplicantUserDataToUser(userData: any): User {
     const namee = userData.name && userData.name.stringValue ? userData.name.stringValue : ''; // Check if userData.name exists and is not undefined
+    const idd = userData.idd && userData.idd.stringValue ? userData.niddame.stringValue : ''; // Check if userData.name exists and is not undefined
+
     const age = userData.age && userData.age.integerValue ? userData.age.integerValue : 0; // Check if userData.age exists and is not undefined
     const email = userData.email && userData.email.stringValue ? userData.email.stringValue : ''; // Check if userData.name exists and is not undefined
     
@@ -116,7 +119,7 @@ import { User } from "../interfaces/User";
     const department = userData.department && userData.department.stringValue ? userData.department.stringValue : ''; // Check if userData.name exists and is not undefined
     const interested = userData.interested && userData.interested.stringValue ? userData.interested.stringValue : ''; // Check if userData.name exists and is not undefined
 
-    const user = new User(namee,age,email,location,phone,department,interested);
+    const user = new User(idd,namee,age,email,location,phone,department,interested);
     return user;
 }
 private mapJobDataToJobObj(jobData: any): job {

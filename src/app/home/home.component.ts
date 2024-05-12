@@ -7,6 +7,7 @@ import { UserService } from '../services/user.service'; // Import UserService
 import { MatDialog } from '@angular/material/dialog';
 import { PauseDialogComponent } from '../pause-dialog-component/pause-dialog-component.component';
 import { FireBaseService } from '../services/firebase.service';
+import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -15,10 +16,10 @@ import { FireBaseService } from '../services/firebase.service';
 
 export class HomeComponent {
   constructor(private userService: UserService,
-    private postService: PostService,
     private jobService: JobService, 
     private router:Router,private dialog: MatDialog,
-  private firebaseService:FireBaseService) {}
+    private firebaseService:FireBaseService,
+    private authService:AuthService) {}
   //Saved: boolean = true;
   jobs:job[] = [];
   jobToEdit:job | undefined;
@@ -82,10 +83,7 @@ export class HomeComponent {
 
 
     });
-    // this.jobs = this.postService.getJobs();
-  //   this.postService.getJobs().subscribe(jobs => {
-  //   this.addedjobs = jobs;
-  // });
+
   for (const addedjob of this.addedjobs) {
       this.jobs.push(addedjob);
   }
@@ -360,9 +358,7 @@ export class HomeComponent {
     job.pausedate = today;
     // You may need to save the updated job back to your data source here
   }
-  printt(rowIndex:number,coloumn: number){
-    console.log("row" + rowIndex);
-    console.log("col" + coloumn);
-    console.log("real" + this.jobs.at(2*rowIndex+coloumn)?.pausedate);
-  }
+ logout(){
+  this.authService.logout();
+ }
 }

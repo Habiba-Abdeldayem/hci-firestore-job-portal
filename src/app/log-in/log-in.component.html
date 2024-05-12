@@ -7,7 +7,7 @@
       </div>
       <h2>Login</h2>
       <form [formGroup]="loginForm" action="#" method="post">
-        <input formControlName = "email" type="text" name="email" placeholder="Email" required>
+        <input formControlName = "email" type="text" name="email" placeholder="Email" #email required>
         <div class="error-message" *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
           <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
           <div *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</div>
@@ -15,7 +15,7 @@
      
 
 
-        <input  formControlName="password" type="password" name="password" placeholder="Password" required>
+        <input  formControlName="password" type="password" name="password" placeholder="Password" #password required>
         <div class="error-message" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
           <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
           <div *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters long.</div>
@@ -26,8 +26,10 @@
             <a href="#">Forgot Password?</a>
           </nav>
           </div>
-        <button type="submit" [disabled] = "loginForm.invalid" (click) = "navigateToHomePage()">Login</button>
-        
+        <button type="submit" [disabled] = "loginForm.invalid" (click) = "login(email.value,password.value)">Login</button>
+        <div class="error-message" *ngIf="loginError">
+          Invalid username or password.
+        </div>
       </form>
       <div>
         <nav>

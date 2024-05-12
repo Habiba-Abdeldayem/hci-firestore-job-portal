@@ -3,7 +3,8 @@
         <h1>Job Portal</h1>
         <a routerLink="/">Home</a>
         <a routerLink="/saved-jobs">Saved jobs</a>
-        <a routerLink="/login">log out</a>
+        <a routerLink="/user-profile">Profle</a>
+        <a routerLink="/login" (click)="logout()">log out</a>
     </nav>
     <div >
         <img src="../../assets/images/apply.jpg" alt="no image" class="apply">
@@ -49,7 +50,6 @@
                           Location: {{ jobs[rowIndex * 2 + columnIndex].location }}<br>
                           Description: {{ jobs[rowIndex * 2 + columnIndex].description }}<br>
                           <button (click)="viewDetails(jobs[rowIndex * 2 + columnIndex].id)" [disabled]="!isJobActive(jobs[rowIndex * 2 + columnIndex].pausedate)">View Details</button><br>
-                          <button (click)="printt(rowIndex,columnIndex)">click</button>
                           <span *ngIf="!isJobActive(jobs[rowIndex * 2 + columnIndex].pausedate)">This job is paused. </span><br>
                           <button *ngIf="jobs[rowIndex * 2 + columnIndex].companyName === username && isCompany" (click)="editJob(jobs[rowIndex * 2 + columnIndex])">Edit</button><br>
                           <button  (click)="deleteJob(rowIndex, columnIndex)">Delete</button><br>

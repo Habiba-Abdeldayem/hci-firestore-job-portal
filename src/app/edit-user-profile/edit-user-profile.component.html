@@ -33,19 +33,19 @@
         <input type="tel" formControlName= "phoneNumber" class="info-value">
       </div>
     </div>
-    
+    <!-- modify to form -->
     <div class="educational-info">
       <h3>Educational Info</h3>
       <div class="info-item">
         <span class="info-label">Department:</span>
-        <input type="text" [(ngModel)]="userDepartment" class="info-value">
+        <input type="text"  class="info-value">
       </div>
       <div class="info-item">
         <span class="info-label">Interested In:</span>
-        <input type="text" [(ngModel)]="userInterests" class="info-value">
+        <input type="text" class="info-value">
       </div>
     </div>
-    <button (click)="saveProfile()">Save Changes</button>
+    <button (click)="saveProfile()" >Save Changes</button>
 </form>   
 
 <!-- {{editUserProfileForm.value | json}} -->

@@ -1,24 +1,24 @@
-<div class="user-profile-container">
-    <h2>Hello <span>{{ userName }}</span>!</h2>
+<div class="user-profile-container" >
+    <h2>Hello <span>{{ currentUser?.name }}</span>!</h2>
     
-    <div class="personal-info">
+    <div class="personal-info" *ngIf="currentUser">
       <h3>Personal Info</h3>
       <div class="personal-info-details">
         <div class="info-item">
           <span class="info-label">Name:</span>
-          <span class="info-value">{{ userName }}</span>
+          <span class="info-value">{{ currentUser.name }}</span>
         </div>
         <div class="info-item">
           <span class="info-label">Age:</span>
-          <span class="info-value">{{ userAge }}</span>
+          <span class="info-value">{{ currentUser.age }}</span>
         </div>
         <div class="info-item">
           <span class="info-label">City:</span>
-          <span class="info-value">{{ userCity }}</span>
+          <span class="info-value">{{ currentUser.age }}</span>
         </div>
         <div class="info-item">
           <span class="info-label">Location:</span>
-          <span class="info-value">{{ userLocation }}</span>
+          <span class="info-value">{{ currentUser.location }}</span>
         </div>
       </div>
       <div class="user-photo-container">
@@ -30,11 +30,11 @@
       <h3>Contact Info</h3>
       <div class="info-item">
         <span class="info-label">Email:</span>
-        <span class="info-value">{{ userEmail }}</span>
+        <span class="info-value">{{ currentUser?.email }}</span>
       </div>
       <div class="info-item">
         <span class="info-label">Phone Number:</span>
-        <span class="info-value">{{ userPhoneNumber }}</span>
+        <span class="info-value">{{ currentUser?.phone }}</span>
       </div>
     </div>
     
@@ -42,12 +42,14 @@
       <h3>Educational Info</h3>
       <div class="info-item">
         <span class="info-label">Department:</span>
-        <span class="info-value">{{ userDepartment }}</span>
+        <span class="info-value">{{ currentUser?.department }}</span>
       </div>
       <div class="info-item">
         <span class="info-label">Interested In:</span>
-        <span class="info-value">{{ userInterests }}</span>
+        <span class="info-value">{{ currentUser?.interested }}</span>
       </div>
     </div>
+    <button routerLink="/edit-profile">Edit Profile</button>
+
   </div>
   

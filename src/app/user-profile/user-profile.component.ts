@@ -1,18 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { User } from '../interfaces/User';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.css'
+  styleUrls: ['./user-profile.component.css']
 })
-export class UserProfileComponent {
-  userName: string = 'John Doe';
-  userAge: number = 30;
-  userCity: string = 'New York';
-  userLocation: string = 'USA';
+export class UserProfileComponent implements OnInit, OnDestroy {
+  currentUser: User | null = null;
   userPhotoUrl: string = '../../assets/images/login_user.jpg';
-  userEmail: string = 'john.doe@example.com';
-  userPhoneNumber: string = '+1234567890';
-  userDepartment: string = 'Computer Science';
-  userInterests: string = 'Web Development, Machine Learning';
+  private currentUserSubscription!: Subscription;
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.currentUserSubscription = this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.currentUserSubscription.unsubscribe();
+  }
+
+  printt(): void {
+    console.log(this.currentUser?.name);
+  }
 }

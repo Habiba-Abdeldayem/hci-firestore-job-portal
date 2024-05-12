@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule , FormBuilder, FormsModule,Validators,ValidationErrors, NgForm } from '@angular/forms';
 import { FireBaseService } from '../services/firebase.service';
 import { User } from '../interfaces/User';
+import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 
@@ -13,16 +16,25 @@ import { User } from '../interfaces/User';
   styleUrl: './edit-user-profile.component.css'
 })
 export class EditUserProfileComponent {
-  constructor(private firebaseService: FireBaseService, private formBuilder: FormBuilder) {}
-  // userName: string = '';
-  // userAge: number | null = null;
-  // userEmail: string = '';
-  // userPhoneNumber: string = '';
+
+  currentUser: User | null = null;
+  userPhotoUrl: string = '../../assets/images/login_user.jpg';
+  private currentUserSubscription!: Subscription;
+
+  ngOnInit(): void {
+    this.currentUserSubscription = this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+    });
+    console.log("initt " + this.currentUser?.id);
+  }
+
+  ngOnDestroy(): void {
+    this.currentUserSubscription.unsubscribe();
+  }
+  constructor(private firebaseService: FireBaseService, private authService:AuthService, private formBuilder: FormBuilder, private router:Router) {}
   userDepartment: string = 'testt';
   userInterests: string = 'testtt';
-  // userCity: string = '';
-  // userLocation: string = '';
-  userPhotoUrl: string = '../../assets/images/login_user.jpg';
+
 
   editUserProfileForm = this.formBuilder.group({
     userName: [
@@ -43,16 +55,23 @@ export class EditUserProfileComponent {
   );
 
   saveProfile(): void {
-    const user: User = {
-      name: this.editUserProfileForm.value.userName || '',
-      age: parseInt(this.editUserProfileForm.value.age || '') ,
-      email: this.editUserProfileForm.value.email  || '',
-      location: this.editUserProfileForm.value.location  || '',
-      phone: this.editUserProfileForm.value.phoneNumber || '',
-      department: this.userDepartment,
-      interested: this.userInterests
-    };
-
-    this.firebaseService.updateUserInfo(user);
+    if (this.currentUser && this.currentUser.id) {
+      const user: User = {
+        id: this.currentUser.id,
+        name: this.editUserProfileForm.value.userName || '',
+        age: parseInt(this.editUserProfileForm.value.age || '') ,
+        email: this.editUserProfileForm.value.email  || '',
+        location: this.editUserProfileForm.value.location  || '',
+        phone: this.editUserProfileForm.value.phoneNumber || '',
+        department: this.userDepartment,
+        interested: this.userInterests
+      };
+      console.log(this.currentUser?.id);
+      this.firebaseService.updateUserInfo(user);
+      this.router.navigate(['/user-profile']);
+    } else {
+      // Handle case where currentUser or id is not available
+      console.error('Current user or id is not available');
+    }
   }
 }

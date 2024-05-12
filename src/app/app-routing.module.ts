@@ -7,6 +7,8 @@ import { PostJobComponent } from './post-job/post-job.component';
 import {HomeComponent } from './home/home.component';
 import {SavedJobComponent } from './saved-job/saved-job.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
+import { EditUserProfileComponent } from './edit-user-profile/edit-user-profile.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
   {path: '', component:SignupComponent},
@@ -16,7 +18,10 @@ const routes: Routes = [
   {path: 'saved-jobs', component:SavedJobComponent},
   {path: 'post-jobs', component:PostJobComponent},
   {path: 'com', component:ApplyForJobComponent},
-  { path: 'job-details/:id', component: JobDetailsComponent }
+  { path: 'job-details/:id', component: JobDetailsComponent },
+  { path: 'user-profile', component: UserProfileComponent },
+  { path: 'edit-profile', component: EditUserProfileComponent }
+
 ];
 
 @NgModule({

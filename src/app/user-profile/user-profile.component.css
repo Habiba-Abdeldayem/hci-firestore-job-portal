@@ -56,4 +56,17 @@
     border-radius: 50%;
     margin-top: 20px;
   }
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #FACD91;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
   
+ button:hover {
+    background-color: #ff9100;
+  }

@@ -5,7 +5,7 @@
       </div>
       <h2>Sign Up</h2>
       <form [formGroup]="signUpForm" action="#" method="post">
-        <input formControlName="userName" type="text" name="username" placeholder="User Name">
+        <input formControlName="userName" type="text" name="username" placeholder="User Name" #userName>
         <div class="error-message" *ngIf="signUpForm.get('userName')?.invalid && (signUpForm.get('userName')?.dirty || signUpForm.get('userName')?.touched)">
           <div *ngIf="signUpForm.get('userName')?.errors?.['required']">Username is required.</div>
           <div *ngIf="signUpForm.get('userName')?.errors?.['minlength']">Username must be at least 3 characters long.</div>
@@ -13,26 +13,26 @@
           <div *ngIf="signUpForm.get('userName')?.errors?.['pattern']">Username can only contain letters, numbers, and underscores.</div>
           <div *ngIf="signUpForm.get('userName')?.errors?.['reservedKeyword']">This username is reserved.</div>
         </div>
-        <input formControlName="email" type="email" name="email" placeholder="Email">
+        <input formControlName="email" type="email" name="email" placeholder="Email" #email>
         <div class="error-message" *ngIf="signUpForm.get('email')?.invalid && (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)">
           <div *ngIf="signUpForm.get('email')?.errors?.['required']">Email is required.</div>
           <div *ngIf="signUpForm.get('email')?.errors?.['email']">Invalid email format.</div>
         </div>
-        <input formControlName="password" type="password" name="password" placeholder="Password">
+        <input formControlName="password" type="password" name="password" placeholder="Password" #password>
         <div class="error-message" *ngIf="signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)">
           <div *ngIf="signUpForm.get('password')?.errors?.['required']">Password is required.</div>
           <div *ngIf="signUpForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters long.</div>
         </div>
-        <input formControlName="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm Password">
+        <input formControlName="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm Password" >
         <div class="error-message" *ngIf="signUpForm.hasError('passwordMismatch') && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched)">Passwords do not match.</div>
         <div class="error-message" *ngIf="signUpForm.get('confirmPassword')?.invalid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched)">
           <div *ngIf="signUpForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required.</div>
         </div>
         <div class="checkbox-container">
-          <input type="checkbox" formControlName="isCompany" id="company">
+          <input type="checkbox" formControlName="isCompany" id="company" #iscompany>
           <label for="company">Company?</label>
       </div>
-        <button type="submit" [disabled]="signUpForm.invalid" (click)="register()">Sign Up</button>
+        <button type="submit" [disabled]="signUpForm.invalid" (click)="onSignup(userName.value,email.value,password.value,iscompany.checked)">Sign Up</button>
       </form>
       
       <!-- {{signUpForm.value | json}} -->
