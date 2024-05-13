@@ -1,3 +1,5 @@
+import { User } from "./User";
+
 export interface job {
   id: number;
   companyName: string; 
@@ -8,5 +10,6 @@ export interface job {
   maxSalary: number;
   description: string;
   isSaved: boolean;
-  pausedate?: Date; // Add pausedate attribute
+  pausedate?: Date; 
+  applicantsId:Array<User>;
 }

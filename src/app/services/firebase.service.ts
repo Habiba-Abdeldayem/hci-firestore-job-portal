@@ -132,6 +132,8 @@ private mapJobDataToJobObj(jobData: any): job {
   const maxSalary = jobData.maxSalary && jobData.maxSalary.integerValue ? jobData.maxSalary.integerValue : 0;
   const description = jobData.description && jobData.description.stringValue ? jobData.description.stringValue : '';
   const isSaved = jobData.isSaved && jobData.isSaved.booleanValue ? jobData.isSaved.booleanValue : false;
+  const applicantsId = jobData.applicantsId? jobData.applicantsId : null;
+
 
   // Retrieve pausedate, assuming it's stored as a timestamp field in userData
   const pausedate = jobData.pausedate && jobData.pausedate.timestampValue ? new Date(jobData.pausedate.timestampValue) : new Date();
@@ -145,7 +147,8 @@ private mapJobDataToJobObj(jobData: any): job {
     maxSalary,
     description,
     isSaved,
-    pausedate
+    pausedate,
+    applicantsId
   };
   return jobDetails;
 

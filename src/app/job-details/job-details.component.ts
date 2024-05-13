@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../services/post.service';
 import { job } from '../interfaces/job';
 import { FireBaseService } from '../services/firebase.service';
@@ -10,11 +10,11 @@ import { FireBaseService } from '../services/firebase.service';
   styleUrls: ['./job-details.component.css']
 })
 export class JobDetailsComponent {
-  jobId: string = ''; // Assuming job ID is of type string
-  jobb!: job; // Define the job object type according to your data model
+  jobId: string = ''; 
+  jobb!: job;
   
   constructor(private route: ActivatedRoute, private postService: PostService
-    , private fireService:FireBaseService
+    , private fireService:FireBaseService , private router:Router
   ) { }
   
   ngOnInit(): void {
@@ -33,5 +33,9 @@ export class JobDetailsComponent {
         }
       );
     });
+  }
+
+  applyNow(){
+    this.router.navigate(['/apply-now', this.jobId]);
   }
 }

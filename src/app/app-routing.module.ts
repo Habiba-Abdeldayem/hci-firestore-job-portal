@@ -19,6 +19,8 @@ const routes: Routes = [
   {path: 'post-jobs', component:PostJobComponent},
   {path: 'com', component:ApplyForJobComponent},
   { path: 'job-details/:id', component: JobDetailsComponent },
+  { path: 'apply-now/:id', component: ApplyForJobComponent },
+
   { path: 'user-profile', component: UserProfileComponent },
   { path: 'edit-profile', component: EditUserProfileComponent }
 

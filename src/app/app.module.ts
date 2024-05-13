@@ -34,7 +34,6 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { SearchComponent } from './search/search.component';
-import { SearchApplicantsComponent } from './search-applicants/search-applicants.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +49,6 @@ import { SearchApplicantsComponent } from './search-applicants/search-applicants
     PauseDialogComponent,
     CompanyProfileComponent,
     SearchComponent,
-    SearchApplicantsComponent,
   ],
   imports: [
     BrowserModule,
