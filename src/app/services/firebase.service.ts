@@ -62,6 +62,10 @@ import { coerceStringArray } from "@angular/cdk/coercion";
           })
         );
       }
+      getApplicants(jobId:string){
+        const jobb=this.getJobDetails(jobId);
+        
+      }
       getJobs():Observable<job[]>{
         const jobsCollection = collection(this.firestore, 'jobs');
         const jobs = collectionData(jobsCollection);
@@ -104,6 +108,22 @@ import { coerceStringArray } from "@angular/cdk/coercion";
           }),
        )
        
+      }
+      getJobByCompanyName(companyName: string): Observable<job> {
+        return this.http.get<any>(this.jobsUrl).pipe(
+          map(response => {
+            // Extract user data from the response
+            const jobs = response.documents.map((doc: any) => doc.fields);
+            // Find user data with matching email
+            const jobData = jobs.find((jobData: any) => jobData.companyName && jobData.companyName.stringValue === companyName);
+            if (jobData) {
+              // Map user data to User object
+              return this.mapJobDataToJobObj(jobData);
+            } else {
+              throw new Error('job not found');
+            }
+          })
+        );
       }
 
       applyForJob(jobId: string, applicantId: any): void {
@@ -157,22 +177,6 @@ import { coerceStringArray } from "@angular/cdk/coercion";
     return user;
 }
 
-// private mapCompanyUserDataToUser(userData: any): User {
-//   const namee = userData.name && userData.name.stringValue ? userData.name.stringValue : ''; // Check if userData.name exists and is not undefined
-//   const idd = userData.idd && userData.idd.stringValue ? userData.niddame.stringValue : ''; // Check if userData.name exists and is not undefined
-
-//   const age = userData.age && userData.age.integerValue ? userData.age.integerValue : 0; // Check if userData.age exists and is not undefined
-//   const email = userData.email && userData.email.stringValue ? userData.email.stringValue : ''; // Check if userData.name exists and is not undefined
-  
-//   const city = userData.city && userData.city.stringValue ? userData.city.stringValue : ''; // Check if userData.name exists and is not undefined
-//   const location = userData.location && userData.location.stringValue ? userData.location.stringValue : ''; // Check if userData.name exists and is not undefined
-//   const phone = userData.phone && userData.phone.stringValue ? userData.phone.stringValue : ''; // Check if userData.name exists and is not undefined
-//   const department = userData.department && userData.department.stringValue ? userData.department.stringValue : ''; // Check if userData.name exists and is not undefined
-//   const interested = userData.interested && userData.interested.stringValue ? userData.interested.stringValue : ''; // Check if userData.name exists and is not undefined
-
-//   const user = new User(idd,namee,age,email,location,phone,department,interested);
-//   return user;
-// }
 private mapJobDataToJobObj(jobData: any): job {
   const id = jobData.id && jobData.id.integerValue ? jobData.id.integerValue : 0;
   const companyName = jobData.companyName && jobData.companyName.stringValue ? jobData.companyName.stringValue : '';

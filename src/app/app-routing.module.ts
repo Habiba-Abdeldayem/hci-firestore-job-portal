@@ -11,6 +11,7 @@ import { EditUserProfileComponent } from './edit-user-profile/edit-user-profile.
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { EditCompanyProfileComponent } from './edit-company-profile/edit-company-profile.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {path: '', component:SignupComponent},
@@ -27,6 +28,8 @@ const routes: Routes = [
   { path: 'edit-profile', component: EditUserProfileComponent },
   { path: 'company-profile', component: CompanyProfileComponent },
   { path: 'edit-company-profile', component: EditCompanyProfileComponent },
+  { path: 'search/:id', component: SearchComponent }
+
 
 
 

@@ -388,4 +388,8 @@ export class HomeComponent {
  logout(){
   this.authService.logout();
  }
+ viewApplicants(jobId:string){
+  this.router.navigate(['/search', jobId]);
+
+ }
 }
