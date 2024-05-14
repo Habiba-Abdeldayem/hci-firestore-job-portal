@@ -7,12 +7,14 @@ export class User{
     phone:string;
     department:string;
     interested:string;
+    aboutAs:string;
+    isCompany:boolean;
 
 
 
 
 
-    constructor(id:string,name:string, age:number, email:string, location:string,phone:string,department:string,interested:string){
+    constructor(id:string,name:string, age:number, email:string, location:string,phone:string,department:string,interested:string, aboutAs:string, isCompany:boolean){
         this.id =id;
         this.name=name;
         this.age=age;
@@ -21,6 +23,8 @@ export class User{
         this.location=location;
         this.phone=phone;
         this.interested=interested;
+        this.aboutAs=aboutAs;
+        this.isCompany=isCompany;
     }
 
 }

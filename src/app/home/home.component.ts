@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { PauseDialogComponent } from '../pause-dialog-component/pause-dialog-component.component';
 import { FireBaseService } from '../services/firebase.service';
 import { AuthService } from '../services/auth.service';
+import { User } from '../interfaces/User';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -51,10 +53,17 @@ export class HomeComponent {
   filter14: boolean = false;
   filter15: boolean = false;
   filter16: boolean = false;
-  isCompany: boolean = false; // Initialize isCompany flag
-  username: string = '';
+  isCompany : boolean | undefined; // Initialize isCompany flag
+  username: string | undefined;
   isCompanyProperty: boolean = false;
 
+  currentUser: User | null = null;
+  userPhotoUrl: string = '../../assets/images/login_user.jpg';
+  private currentUserSubscription!: Subscription;
+
+  ngOnDestroy(): void {
+    this.currentUserSubscription.unsubscribe();
+  }
   openPauseDialog(job: job) {
     const dialogRef = this.dialog.open(PauseDialogComponent, {
       width: '250px',
@@ -64,17 +73,20 @@ export class HomeComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         job.pausedate = result;
+        this.firebaseService.addOrUpdateJob(job);
       }
     });
   }
   ngOnInit() {
-
+    this.currentUserSubscription = this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+    });
     // const defaultJobs = [...this.jobs];
     this.firebaseService.getJobs().subscribe((jobs: job[]) => {
       this.jobs = jobs;
       this.initJobs();
-      this.isCompany = this.userService.getIsCompany();
-      this.username = this.userService.getUsername();
+      this.isCompany = this.currentUser?.isCompany;
+      this.username = this.currentUser?.name;
       for(const job of this.jobs){
         if(this.username == job.companyName){
           this.isCompanyProperty =true;
@@ -211,98 +223,113 @@ export class HomeComponent {
   }
   checkFilters() {
     
-      if (this.filter1 || this.filter6 || this.filter9 || this.filter13) {
-        for(const jobb of this.jobs.filter(job =>
-          job.companyName.toLowerCase().includes('front')
-          
-        )){
-          if (!this.filteredJobs.some(filteredJob => filteredJob.id === jobb.id)) {
-            // Check if jobb is not already in filteredJobs list
-            this.filteredJobs.push(jobb);
-          }
+    if (this.filter1 || this.filter6 || this.filter9 || this.filter13) {
+      for(const jobb of this.jobs.filter(job =>
+        job.companyName.toLowerCase().includes('front')||
+        job.jobTitle.toLowerCase().includes('front')||
+        job.location.toLowerCase().includes('Alsaida Zeinab')
+      )){
+        if (!this.filteredJobs.some(filteredJob => filteredJob.id === jobb.id)) {
+          // Check if jobb is not already in filteredJobs list
+          this.filteredJobs.push(jobb);
         }
-        this.filtering = this.filteredJobs.length != 0;
       }
-      else if(!this.filter1 && !this.filter6 && !this.filter9 && !this.filter13){
-        // Remove the specified job from filteredJobs
-        const indexToRemove = this.filteredJobs.findIndex(filteredJob =>
-          filteredJob.companyName.toLowerCase().includes('front')
-        );
-        if (indexToRemove !== -1) {
-          this.filteredJobs.splice(indexToRemove, 1);
-        }
-        this.filtering = this.filteredJobs.length != 0;
+      this.filtering = this.filteredJobs.length != 0;
+    }
+    else if(!this.filter1 && !this.filter6 && !this.filter9 && !this.filter13){
+      // Remove the specified job from filteredJobs
+      const indexToRemove = this.filteredJobs.findIndex(filteredJob =>
+        filteredJob.companyName.toLowerCase().includes('front')||
+        filteredJob.jobTitle.toLowerCase().includes('front')||
+        filteredJob.location.toLowerCase().includes('Alsaida Zeinab')
+      );
+      if (indexToRemove !== -1) {
+        this.filteredJobs.splice(indexToRemove, 1);
       }
+      this.filtering = this.filteredJobs.length != 0;
+    }
 
-      if (this.filter2 || this.filter8 || this.filter11 || this.filter16) {
-        for(const jobb of this.jobs.filter(job =>
-          job.companyName.toLowerCase().includes('back')
-          
-        )){
-          if (!this.filteredJobs.some(filteredJob => filteredJob.id === jobb.id)) {
-            // Check if jobb is not already in filteredJobs list
-            this.filteredJobs.push(jobb);
-          }
+    if (this.filter2 || this.filter8 || this.filter11 || this.filter16) {
+      for(const jobb of this.jobs.filter(job =>
+        job.companyName.toLowerCase().includes('back')||
+        job.jobTitle.toLowerCase().includes('back')||
+        job.location.toLowerCase().includes('october')
+        
+      )){
+        if (!this.filteredJobs.some(filteredJob => filteredJob.id === jobb.id)) {
+          // Check if jobb is not already in filteredJobs list
+          this.filteredJobs.push(jobb);
         }
-        this.filtering = this.filteredJobs.length != 0;
       }
-      else if(!this.filter2 && !this.filter8 && !this.filter11 && !this.filter16){
-        // Remove the specified job from filteredJobs
-        const indexToRemove = this.filteredJobs.findIndex(filteredJob =>
-          filteredJob.companyName.toLowerCase().includes('back')
-        );
-        if (indexToRemove !== -1) {
-          this.filteredJobs.splice(indexToRemove, 1);
-        }
-        this.filtering = this.filteredJobs.length != 0;
+      this.filtering = this.filteredJobs.length != 0;
+    }
+    else if(!this.filter2 && !this.filter8 && !this.filter11 && !this.filter16){
+      // Remove the specified job from filteredJobs
+      const indexToRemove = this.filteredJobs.findIndex(filteredJob =>
+        filteredJob.companyName.toLowerCase().includes('back')||
+        filteredJob.jobTitle.toLowerCase().includes('back')||
+        filteredJob.location.toLowerCase().includes('october')
+      );
+      if (indexToRemove !== -1) {
+        this.filteredJobs.splice(indexToRemove, 1);
       }
+      this.filtering = this.filteredJobs.length != 0;
+    }
 
-      if (this.filter3 || this.filter7 || this.filter10 || this.filter14) {
-        for(const jobb of this.jobs.filter(job =>
-          job.companyName.toLowerCase().includes('ui')
-          
-        )){
-          if (!this.filteredJobs.some(filteredJob => filteredJob.id === jobb.id)) {
-            // Check if jobb is not already in filteredJobs list
-            this.filteredJobs.push(jobb);
-          }
+    if (this.filter3 || this.filter7 || this.filter10 || this.filter14) {
+      for(const jobb of this.jobs.filter(job =>
+        job.companyName.toLowerCase().includes('ui')||
+        job.jobTitle.toLowerCase().includes('ui')||
+        job.location.toLowerCase().includes('nasr')
+        
+      )){
+        if (!this.filteredJobs.some(filteredJob => filteredJob.id === jobb.id)) {
+          // Check if jobb is not already in filteredJobs list
+          this.filteredJobs.push(jobb);
         }
-        this.filtering = this.filteredJobs.length != 0;
       }
-      else if(!this.filter3 && !this.filter7 && !this.filter10 && !this.filter14){
-        // Remove the specified job from filteredJobs
-        const indexToRemove = this.filteredJobs.findIndex(filteredJob =>
-          filteredJob.companyName.toLowerCase().includes('ui')
-        );
-        if (indexToRemove !== -1) {
-          this.filteredJobs.splice(indexToRemove, 1);
-        }
-        this.filtering = this.filteredJobs.length != 0;
+      this.filtering = this.filteredJobs.length != 0;
+    }
+    else if(!this.filter3 && !this.filter7 && !this.filter10 && !this.filter14){
+      // Remove the specified job from filteredJobs
+      const indexToRemove = this.filteredJobs.findIndex(filteredJob =>
+        filteredJob.companyName.toLowerCase().includes('ui')||
+        filteredJob.jobTitle.toLowerCase().includes('ui')||
+        filteredJob.location.toLowerCase().includes('nasr')
+      );
+      if (indexToRemove !== -1) {
+        this.filteredJobs.splice(indexToRemove, 1);
       }
+      this.filtering = this.filteredJobs.length != 0;
+    }
 
-      if (this.filter4 || this.filter5 || this.filter12 || this.filter15) {
-        for(const jobb of this.jobs.filter(job =>
-          job.companyName.toLowerCase().includes('test')
-          
-        )){
-          if (!this.filteredJobs.some(filteredJob => filteredJob.id === jobb.id)) {
-            // Check if jobb is not already in filteredJobs list
-            this.filteredJobs.push(jobb);
-          }
+    if (this.filter4 || this.filter5 || this.filter12 || this.filter15) {
+      for(const jobb of this.jobs.filter(job =>
+        job.companyName.toLowerCase().includes('test')||
+        job.jobTitle.toLowerCase().includes('test')||
+        job.location.toLowerCase().includes('elabassia')
+        
+      )){
+        if (!this.filteredJobs.some(filteredJob => filteredJob.id === jobb.id)) {
+          // Check if jobb is not already in filteredJobs list
+          this.filteredJobs.push(jobb);
         }
-        this.filtering = this.filteredJobs.length != 0;
       }
-      else if(!this.filter4 && !this.filter5 && !this.filter12 && !this.filter15){
-        // Remove the specified job from filteredJobs
-        const indexToRemove = this.filteredJobs.findIndex(filteredJob =>
-          filteredJob.companyName.toLowerCase().includes('test')
-        );
-        if (indexToRemove !== -1) {
-          this.filteredJobs.splice(indexToRemove, 1);
-        }
-        this.filtering = this.filteredJobs.length != 0;
+      this.filtering = this.filteredJobs.length != 0;
+    }
+    else if(!this.filter4 && !this.filter5 && !this.filter12 && !this.filter15){
+      // Remove the specified job from filteredJobs
+      const indexToRemove = this.filteredJobs.findIndex(filteredJob =>
+        filteredJob.companyName.toLowerCase().includes('test')||
+        filteredJob.jobTitle.toLowerCase().includes('test')||
+        filteredJob.location.toLowerCase().includes('elabassia')
+      );
+      if (indexToRemove !== -1) {
+        this.filteredJobs.splice(indexToRemove, 1);
       }
-  }
+      this.filtering = this.filteredJobs.length != 0;
+    }}
+
   deleteJob(rowIndex: number, columnIndex: number) {
     const indexToRemove = rowIndex * 2 + columnIndex;
     if (indexToRemove >= 0 && indexToRemove < this.jobs.length) {

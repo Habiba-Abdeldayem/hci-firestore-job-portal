@@ -9,6 +9,8 @@ import {SavedJobComponent } from './saved-job/saved-job.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { EditUserProfileComponent } from './edit-user-profile/edit-user-profile.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { EditCompanyProfileComponent } from './edit-company-profile/edit-company-profile.component';
 
 const routes: Routes = [
   {path: '', component:SignupComponent},
@@ -22,7 +24,11 @@ const routes: Routes = [
   { path: 'apply-now/:id', component: ApplyForJobComponent },
 
   { path: 'user-profile', component: UserProfileComponent },
-  { path: 'edit-profile', component: EditUserProfileComponent }
+  { path: 'edit-profile', component: EditUserProfileComponent },
+  { path: 'company-profile', component: CompanyProfileComponent },
+  { path: 'edit-company-profile', component: EditCompanyProfileComponent },
+
+
 
 ];
 

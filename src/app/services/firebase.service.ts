@@ -9,6 +9,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { job } from "../interfaces/job";
 import { User } from "../interfaces/User";
+import { coerceStringArray } from "@angular/cdk/coercion";
 
 @Injectable({
     providedIn: 'root' // to have singleton
@@ -104,11 +105,43 @@ import { User } from "../interfaces/User";
        )
        
       }
+
+      applyForJob(jobId: string, applicantId: any): void {
+        this.getJobDetails(jobId).subscribe((appliedJob) => {
+          if (appliedJob) {
+            // Access the applicantsId array from the applied job object
+            const applicantsId: Array<string> = Array.isArray(appliedJob.applicantsId) ? appliedJob.applicantsId : [];
+      
+            // Check if the applicant's ID already exists in the array
+            if (!applicantsId.includes(applicantId)) {
+              // Add the applicant's ID to the applicantsId array
+              applicantsId.push(applicantId);
+      
+              // Update the job document in Firestore with the updated applicantsId array
+              const jobRef = doc(this.firestore, 'jobs', jobId);
+              updateDoc(jobRef, { applicantsId })
+                .then(() => {
+                  console.log(`Applicant ${applicantId} applied for job ${jobId} successfully.`);
+                })
+                .catch((error) => {
+                  console.error('Error applying for job:', error);
+                });
+            } else {
+              console.log(`Applicant ${applicantId} has already applied for job ${jobId}.`);
+            }
+          } else {
+            console.error(`Job details not found for job ID ${jobId}.`);
+          }
+        });
+      }
+      
+      
+      
       
     
     private mapApplicantUserDataToUser(userData: any): User {
     const namee = userData.name && userData.name.stringValue ? userData.name.stringValue : ''; // Check if userData.name exists and is not undefined
-    const idd = userData.idd && userData.idd.stringValue ? userData.niddame.stringValue : ''; // Check if userData.name exists and is not undefined
+    const idd = userData.idd && userData.idd.stringValue ? userData.idd.stringValue : ''; // Check if userData.name exists and is not undefined
 
     const age = userData.age && userData.age.integerValue ? userData.age.integerValue : 0; // Check if userData.age exists and is not undefined
     const email = userData.email && userData.email.stringValue ? userData.email.stringValue : ''; // Check if userData.name exists and is not undefined
@@ -118,10 +151,28 @@ import { User } from "../interfaces/User";
     const phone = userData.phone && userData.phone.stringValue ? userData.phone.stringValue : ''; // Check if userData.name exists and is not undefined
     const department = userData.department && userData.department.stringValue ? userData.department.stringValue : ''; // Check if userData.name exists and is not undefined
     const interested = userData.interested && userData.interested.stringValue ? userData.interested.stringValue : ''; // Check if userData.name exists and is not undefined
-
-    const user = new User(idd,namee,age,email,location,phone,department,interested);
+    const aboutAs = userData.aboutAs && userData.aboutAs.stringValue ? userData.aboutAs.stringValue : ''; // Check if userData.name exists and is not undefined
+    const isCompany = userData.isCompany && userData.isCompany.booleanValue ? userData.isCompany.booleanValue : false; // Check if userData.name exists and is not undefined
+    const user = new User(idd,namee,age,email,location,phone,department,interested,aboutAs,isCompany);
     return user;
 }
+
+// private mapCompanyUserDataToUser(userData: any): User {
+//   const namee = userData.name && userData.name.stringValue ? userData.name.stringValue : ''; // Check if userData.name exists and is not undefined
+//   const idd = userData.idd && userData.idd.stringValue ? userData.niddame.stringValue : ''; // Check if userData.name exists and is not undefined
+
+//   const age = userData.age && userData.age.integerValue ? userData.age.integerValue : 0; // Check if userData.age exists and is not undefined
+//   const email = userData.email && userData.email.stringValue ? userData.email.stringValue : ''; // Check if userData.name exists and is not undefined
+  
+//   const city = userData.city && userData.city.stringValue ? userData.city.stringValue : ''; // Check if userData.name exists and is not undefined
+//   const location = userData.location && userData.location.stringValue ? userData.location.stringValue : ''; // Check if userData.name exists and is not undefined
+//   const phone = userData.phone && userData.phone.stringValue ? userData.phone.stringValue : ''; // Check if userData.name exists and is not undefined
+//   const department = userData.department && userData.department.stringValue ? userData.department.stringValue : ''; // Check if userData.name exists and is not undefined
+//   const interested = userData.interested && userData.interested.stringValue ? userData.interested.stringValue : ''; // Check if userData.name exists and is not undefined
+
+//   const user = new User(idd,namee,age,email,location,phone,department,interested);
+//   return user;
+// }
 private mapJobDataToJobObj(jobData: any): job {
   const id = jobData.id && jobData.id.integerValue ? jobData.id.integerValue : 0;
   const companyName = jobData.companyName && jobData.companyName.stringValue ? jobData.companyName.stringValue : '';

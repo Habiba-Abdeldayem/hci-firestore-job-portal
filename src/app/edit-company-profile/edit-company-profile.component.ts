@@ -1,25 +1,24 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule , FormBuilder, FormsModule,Validators,ValidationErrors, NgForm } from '@angular/forms';
-import { FireBaseService } from '../services/firebase.service';
 import { User } from '../interfaces/User';
-import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-
-
+import { FireBaseService } from '../services/firebase.service';
+import { AuthService } from '../services/auth.service';
+import { Route, Router } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-edit-user-profile',
-  standalone: true,
-  imports: [FormsModule,ReactiveFormsModule],
-  templateUrl: './edit-user-profile.component.html',
-  styleUrl: './edit-user-profile.component.css'
+  selector: 'app-edit-company-profile',
+  templateUrl: './edit-company-profile.component.html',
+  styleUrl: './edit-company-profile.component.css'
 })
-export class EditUserProfileComponent {
-
+export class EditCompanyProfileComponent {
+  
   currentUser: User | null = null;
-  userPhotoUrl: string = '../../assets/images/login_user.jpg';
   private currentUserSubscription!: Subscription;
+  constructor(private firebaseService: FireBaseService, 
+    private authService:AuthService,
+     private router:Router,
+    private formBuilder:FormBuilder) {}
 
   ngOnInit(): void {
     this.currentUserSubscription = this.authService.currentUser$.subscribe(user => {
@@ -31,10 +30,6 @@ export class EditUserProfileComponent {
   ngOnDestroy(): void {
     this.currentUserSubscription.unsubscribe();
   }
-  constructor(private firebaseService: FireBaseService, private authService:AuthService, private formBuilder: FormBuilder, private router:Router) {}
-  userDepartment: string = '';
-  userInterests: string = '';
-
 
   editUserProfileForm = this.formBuilder.group({
     userName: [
@@ -46,10 +41,10 @@ export class EditUserProfileComponent {
         Validators.pattern(/^[a-zA-Z0-9_]*$/) // Only letters, numbers, and underscores allowed
       ]
     ],
-    age: ['', [Validators.required, Validators.min(12),Validators.max(100)]],
-    location: ['', [Validators.required, Validators.maxLength(50)]],
     email: ['', [Validators.required,Validators.email]],
     phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+    aboutUs:[''],
+    phone:['']
 
   }, 
   );
@@ -59,21 +54,22 @@ export class EditUserProfileComponent {
       const user: User = {
         id: this.currentUser.id,
         name: this.editUserProfileForm.value.userName || '',
-        age: parseInt(this.editUserProfileForm.value.age || '') ,
-        email: this.editUserProfileForm.value.email  || '',
-        location: this.editUserProfileForm.value.location  || '',
-        phone: this.editUserProfileForm.value.phoneNumber || '',
-        department: this.userDepartment,
-        interested: this.userInterests,
-        aboutAs:'',
-        isCompany:false
+        age: 0 ,
+        email: this.currentUser.email  || '',
+        location:'',
+        phone: this.editUserProfileForm.value.phone || '',
+        department: '',
+        interested: '',
+        aboutAs: this.editUserProfileForm.value.aboutUs || '',
+        isCompany:true
       };
       console.log(this.currentUser?.id);
       this.authService.updateUserInfo(user);
-      this.router.navigate(['/user-profile']);
+      this.router.navigate(['/company-profile']);
     } else {
       // Handle case where currentUser or id is not available
       console.error('Current user or id is not available');
     }
   }
+
 }

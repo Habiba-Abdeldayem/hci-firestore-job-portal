@@ -13,6 +13,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 
 export class AuthService {
   isLoggedIn=false;
+  isCompany=false;
   public currentUserSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
   
@@ -67,14 +68,35 @@ export class AuthService {
       const userDoc = await this.firestore.collection('users').doc(result.user?.uid).get().toPromise();
       if (userDoc) {
         const currentUser = userDoc.data() as User;
+        this.setIsCompany(currentUser.isCompany);
         this.currentUserSubject.next(currentUser); // Update the subject
         console.log("User signed in:", currentUser);
+
       }
     } catch (error) {
       console.error('Login error:', error);
       throw error;
     }
   }
+  updateUserInfo(user:User){
+    this.currentUserSubject.next(user); 
+    this.firebaseService.updateUserInfo(user);
+  }
+  setIsCompany(value: boolean) {
+    this.isCompany = value;
+  }
+
+  getIsCompany(): boolean {
+    return this.isCompany;
+  }
+
+  // setUsername(username: string) {
+  //   this.username = username;
+  // }
+
+  // getUsername(): string {
+  //   return this.username;
+  // }
 
   logout(): void {
     this.afAuth.signOut();

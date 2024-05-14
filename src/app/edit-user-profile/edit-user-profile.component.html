@@ -38,11 +38,11 @@
       <h3>Educational Info</h3>
       <div class="info-item">
         <span class="info-label">Department:</span>
-        <input type="text"  class="info-value">
+        <input [(ngModel)]="userDepartment" type="text"  class="info-value">
       </div>
       <div class="info-item">
         <span class="info-label">Interested In:</span>
-        <input type="text" class="info-value">
+        <input [(ngModel)]="userInterests" type="text" class="info-value">
       </div>
     </div>
     <button (click)="saveProfile()" >Save Changes</button>

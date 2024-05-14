@@ -25,7 +25,7 @@ export class PostService {
 
   updateJob(updatedJob: job) {
     const index = this.jobs.findIndex(job => job.id === updatedJob.id);
-    // this.firebaseService.addOrUpdateJob(updatedJob);
+    this.firebaseService.addOrUpdateJob(updatedJob);
 
     if (index !== -1) {
       this.jobs[index] = updatedJob;

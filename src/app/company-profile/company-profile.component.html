@@ -1,14 +1,19 @@
 <div class="container">
-    <h1 class="company-name">Company Name: ABC Corporation</h1>
+    <h1 class="company-name">{{this.currentUser?.name}}</h1> 
+    <button  routerLink="/edit-company-profile">Edit Profile</button>
     <img src="../../assets/images/compnay.jpeg" alt="Company Logo" class="company-logo">
     <div class="about-us">
       <h2>About Us</h2>
-      <p class="about-text">ABC Corporation is a leading provider of innovative solutions in the tech industry...</p>
+      <p class="about-text">{{this.currentUser?.aboutAs}}</p>
     </div>
     <div class="social-links">
       <h3>Follow Us:</h3>
       <a href="#" class="social-link"><img src="../../assets/images/facebook.png" alt="Facebook"></a>
       <a href="#" class="social-link"><img src="../../assets/images/linkedin.png" alt="LinkedIn"></a>
       <a href="#" class="social-link"><img src="../../assets/images/instagram.png" alt="Instagram"></a>
+      <br>
+      <mat-icon>phone</mat-icon>  {{currentUser?.phone}}
+      <br>
+      <mat-icon>email</mat-icon> {{currentUser?.email}}
     </div>
   </div>

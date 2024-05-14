@@ -1,0 +1,25 @@
+<div class="user-profile-container">
+    <!-- <h2 formControlName= "name">Hello <span>{{ userName }}</span>!</h2> -->
+ <form [formGroup]="editUserProfileForm">
+    <div class="personal-info">
+      <h3>Company Info</h3>
+      <div class="personal-info-details">
+        <div class="info-item">
+          <span class="info-label">Name:</span>
+          <input formControlName= "userName" type="text" class="info-value">
+        </div>
+        <div class="info-item">
+          <span class="info-label">About Us:</span>
+          <input type="text" formControlName= "aboutUs" class="info-value">
+        </div>
+        <div class="info-item">
+          <span class="info-label">phone:</span>
+          <input type="text" formControlName= "phone" class="info-value">
+        </div>
+      </div>
+    </div>
+    
+    <button (click)="saveProfile()" >Save Changes</button>
+</form>   
+
+</div>

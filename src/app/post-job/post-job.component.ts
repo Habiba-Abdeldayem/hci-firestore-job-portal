@@ -55,7 +55,7 @@ export class PostJobComponent {
         pausedate:today,
       };
       if (this.jobToEdit) {
-        // this.postService.updateJob(editedJob as job);
+        this.postService.updateJob(editedJob as job);
       } else {
         this.postService.addJob(editedJob as job);
       }

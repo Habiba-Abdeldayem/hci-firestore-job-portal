@@ -12,9 +12,6 @@ export class UserService {
 
   constructor() { }
 
-  // getUser() : User | null{
-  //   return this.auth.currentUser;
-  // }
   setIsCompany(value: boolean) {
     this.isCompany = value;
   }

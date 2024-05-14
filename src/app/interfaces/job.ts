@@ -11,5 +11,5 @@ export interface job {
   description: string;
   isSaved: boolean;
   pausedate?: Date; 
-  applicantsId:Array<User>;
+  applicantsId:Array<string>;
 }
